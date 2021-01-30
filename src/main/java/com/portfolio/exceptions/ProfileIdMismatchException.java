@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author Jorge Díaz
  * @version 1.0.0
  */
-@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Portfolio not found")
-public class PortfolioNotFoundException extends Exception {
-    public PortfolioNotFoundException() {
-        super("Portfolio not found");
+@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "Profile Id mismatch")
+public class ProfileIdMismatchException extends Exception {
+    public ProfileIdMismatchException() {
+        super("Profile Id mismatch");
     }
 }
