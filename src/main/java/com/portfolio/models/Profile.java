@@ -2,18 +2,10 @@ package com.portfolio.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
-import org.apache.tomcat.util.codec.binary.Base64;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.sql.Blob;
-import java.util.Objects;
 
 /**
  * Profile model is using to save profile's data
@@ -24,6 +16,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "profile")
 @Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @JsonIdentityInfo(
     generator = ObjectIdGenerators.PropertyGenerator.class,
