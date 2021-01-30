@@ -2,10 +2,7 @@ package com.portfolio.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -18,6 +15,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "portfolio")
 @Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @JsonIdentityInfo(
     generator = ObjectIdGenerators.PropertyGenerator.class,
