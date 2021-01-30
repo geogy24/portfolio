@@ -5,9 +5,23 @@
   <title>Portfolio</title>
 </head>
 <body>
-  <h1 th:text="${portfolio.getTitle()}"></h1>
   <img th:src="${portfolio.getImageURL()}">
-  <h3>My Work Experience</h3>
-  <p th:text="${portfolio.getDescription()}"></p>
+  <div id="tweets">
+    <div th:if="${tweets.size()} > 0" th:each="tweet: ${tweets}">
+      <img th:src="${tweet.getProfileImageUrl()}">
+      <p th:text="${tweet.getName()}"></p>
+      <p th:text="${tweet.getTweet()}"></p>
+    </div>
+    <div th:if="${tweets.size()} == 0">
+      <p>Sorry, we can't load your tweets</p>
+    </div>
+  </div>
+  <div id="experience">
+    <h1 th:text="${portfolio.getTitle()}"></h1>
+    <div>
+      <h3>My Work Experience</h3>
+      <p th:text="${portfolio.getDescription()}"></p>
+    </div>
+  </div>
 </body>
 </html>
