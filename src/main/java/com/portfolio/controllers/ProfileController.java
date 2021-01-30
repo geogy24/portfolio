@@ -1,5 +1,6 @@
 package com.portfolio.controllers;
 
+import com.portfolio.exceptions.ProfileIdMismatchException;
 import com.portfolio.exceptions.ProfileNotFoundException;
 import com.portfolio.models.Profile;
 import com.portfolio.repositories.ProfileRepository;
@@ -7,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -30,7 +32,7 @@ public class ProfileController {
      *
      * @param id user's email
      * @return Profile's model
-     * @throws ProfileNotFoundException
+     * @throws ProfileNotFoundException profile not found
      */
     @GetMapping("/{id}")
     @ExceptionHandler(ProfileNotFoundException.class)
@@ -41,5 +43,31 @@ public class ProfileController {
     })
     public Profile findOne(@PathVariable String id) throws ProfileNotFoundException {
         return this.profileRepository.findById(id).orElseThrow(ProfileNotFoundException::new);
+    }
+
+    /**
+     * Updates a profile
+     *
+     * @param profile New profile data
+     * @param id Profile identification
+     * @throws ProfileIdMismatchException id is not the same on json body request
+     * @throws ProfileNotFoundException profile not found
+     */
+    @PutMapping("/{id}")
+    @ApiOperation(value = "Returns book updated")
+    @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "Updates user correctly"),
+            @ApiResponse(code = 400, message = "Profile Id mismatch"),
+            @ApiResponse(code = 404, message = "Profile Not Found")
+    })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@RequestBody Profile profile, @PathVariable String id)
+            throws ProfileIdMismatchException, ProfileNotFoundException {
+        if (profile.getId().compareTo(id) != 0) {
+            throw new ProfileIdMismatchException();
+        }
+        this.profileRepository.findById(id)
+                .orElseThrow(ProfileNotFoundException::new);
+        this.profileRepository.save(profile);
     }
 }
