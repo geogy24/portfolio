@@ -55,32 +55,4 @@ public class TwitterService {
         paging.setCount(SHOW_LAST_X_TWEETS);
         return paging;
     }
-
-    /*public BookDTO bookInformation(String isbn)
-        throws InterruptedException, IOException, URISyntaxException, BookNotFoundException {
-        HttpResponse<String> response = this.makeRequest(isbn);
-        JsonNode json = (new ObjectMapper()).readTree(response.body());
-
-        if (json.isEmpty()) {
-            throw new BookNotFoundException();
-        } else {
-            return new OpenLibraryBookDTO(isbn, json).convertToDTO();
-        }
-    }
-
-    private HttpResponse<String> makeRequest(String isbn)
-        throws URISyntaxException, IOException, InterruptedException {
-        HttpClient httpClient = HttpClient.newHttpClient();
-        HttpRequest httpRequest = HttpRequest.newBuilder()
-                                      .uri(new URI(String.format(this.buildUrl(), isbn)))
-                                      .build();
-
-        return httpClient.send(httpRequest, BodyHandlers.ofString());
-    }
-
-    private String buildUrl() {
-        return this.environment.getProperty("app.open-library-url") + OPEN_LIBRARY_PATH
-                   + OPEN_LIBRARY_PARAMS;
-    }*/
-
 }
