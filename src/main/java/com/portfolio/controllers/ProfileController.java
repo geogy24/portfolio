@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Entry point to users routes
@@ -61,13 +62,15 @@ public class ProfileController {
             @ApiResponse(code = 404, message = "Profile Not Found")
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Profile profile, @PathVariable String id)
-            throws ProfileIdMismatchException, ProfileNotFoundException {
+    public void update(
+            @RequestPart("json") Profile profile, @RequestPart("image") MultipartFile image, @PathVariable String id
+    ) throws ProfileIdMismatchException, ProfileNotFoundException {
         if (profile.getId().compareTo(id) != 0) {
             throw new ProfileIdMismatchException();
         }
         this.profileRepository.findById(id)
                 .orElseThrow(ProfileNotFoundException::new);
+        profile.setPicture(image);
         this.profileRepository.save(profile);
     }
 }
