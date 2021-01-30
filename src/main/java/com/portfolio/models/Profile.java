@@ -1,6 +1,7 @@
 package com.portfolio.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,24 +36,28 @@ public class Profile {
      * Experience summary
      */
     @Column(name = "experience_summary")
+    @JsonProperty(value="experience_summary")
     private String experienceSummary;
 
     /**
      * Last names
      */
     @Column(name = "last_names")
+    @JsonProperty(value = "last_name")
     private String lastNames;
 
     /**
      * Names
      */
     @Column(name = "names")
+    @JsonProperty(value = "first_name")
     private String names;
 
     /**
      * Twitter user id
      */
     @Column(name = "twitter_user_id")
+    @JsonProperty(value = "twitter_user_id")
     private String twitterUserId;
 
     /**
