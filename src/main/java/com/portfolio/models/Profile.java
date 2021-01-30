@@ -6,11 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -66,30 +64,12 @@ public class Profile {
     /**
      * Picture
      */
+    @Lob
     @Column()
-    private Blob picture;
+    private byte[] picture;
 
     @SneakyThrows
-    public String getPicture(){
-        String base64Encoded = "";
-
-        if (Objects.nonNull(this.picture)) {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            Blob blob = this.picture;
-            InputStream inputStream = blob.getBinaryStream();
-
-            int n = 0;
-
-            while ((n=inputStream.read(buffer))>=0) {
-                byteArrayOutputStream.write(buffer, 0, n);
-            }
-
-            inputStream.close();
-            byte[] encodeBase64 = Base64.encodeBase64(buffer);
-            base64Encoded = new String(encodeBase64, StandardCharsets.UTF_8);
-        }
-
-        return base64Encoded;
+    public void setPicture(MultipartFile image) {
+        this.picture = image.getBytes();
     }
 }
