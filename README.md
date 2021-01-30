@@ -45,6 +45,17 @@ Next, run with gradle
 ./gradlew bootRun
 ```
 
+The below command initialize a Tomcat server at 8080 port.
+
+### Documentation
+
+You can check how to do a request and what parameters are required in our documentation,
+running the server and make a request to http://localhost:8080/swagger-ui.html.
+
+**Note**
+If you need the documentation on JSON format you can get it, make a request to
+http://localhost:8080/v2/api-docs
+
 ## Run tests️
 
 
