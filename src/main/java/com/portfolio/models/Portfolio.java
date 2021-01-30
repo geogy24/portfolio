@@ -10,7 +10,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 /**
- * Book model is using to save books data
+ * Portfolio model is using to save portfolio's data
  *
  * @author Jorge Díaz
  * @version 1.0.0
@@ -36,24 +36,24 @@ public class Portfolio {
     /**
      * Description
      */
-    @Column(nullable = true)
+    @Column()
     private String description;
 
     /**
      * Image URL
      */
-    @Column(name = "image_url", nullable = true)
+    @Column(name = "image_url")
     private String imageURL;
 
     /**
      * Twitter Username
      */
-    @Column(name = "twitter_user_name", nullable = true)
+    @Column(name = "twitter_user_name")
     private String twitterUsername;
 
     /**
      * Title
      */
-    @Column(name = "title", nullable = true)
+    @Column(name = "title")
     private String title;
 }

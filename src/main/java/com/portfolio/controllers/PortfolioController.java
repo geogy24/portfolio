@@ -1,12 +1,12 @@
 package com.portfolio.controllers;
 
+import com.portfolio.exceptions.PortfolioNotFoundException;
 import com.portfolio.models.Portfolio;
 import com.portfolio.repositories.PortfolioRepository;
 import com.portfolio.services.TwitterService;
 import com.portfolio.services.dtos.TweetDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,20 +32,21 @@ public class PortfolioController {
     @Autowired
     private TwitterService twitterService;
 
+    /**
+     * Shows in a view, a portfolio with users tweets
+     *
+     * @param id Portfolio id
+     * @return ModelAndView
+     * @throws TwitterException
+     */
     @GetMapping("/{id}")
-    public ModelAndView getUser(@PathVariable Long id, Model model) throws TwitterException {
-        ModelAndView modelAndView = new ModelAndView();
-        Optional<Portfolio> portfolio = portfolioRepository.findById(id);
+    public ModelAndView getUser(@PathVariable Long id) throws TwitterException, PortfolioNotFoundException {
+        Optional<Portfolio> portfolio = Optional.ofNullable(portfolioRepository.findById(id).orElseThrow(PortfolioNotFoundException::new));
+        ArrayList<TweetDTO> tweetList = twitterService.getLastFiveTweetsFromUserTimeline(portfolio.get().getTwitterUsername());
 
-        if (portfolio.isPresent()) {
-            ArrayList<TweetDTO> tweetList = twitterService.getLastFiveTweetsFromUserTimeline(portfolio.get().getTwitterUsername());
-
-            modelAndView.setViewName("portfolio");
-            modelAndView.addObject("portfolio", portfolio.get());
-            modelAndView.addObject("tweets", tweetList);
-        } else {
-            modelAndView.setViewName("error");
-        }
+        ModelAndView modelAndView = new ModelAndView("portfolio");
+        modelAndView.addObject("portfolio", portfolio.get());
+        modelAndView.addObject("tweets", tweetList);
 
         return modelAndView;
     }
