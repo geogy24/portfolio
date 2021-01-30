@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolio</title>
+</head>
+<body>
+  <h1 th:text="${portfolio.getTitle()}"></h1>
+  <img th:src="${portfolio.getImageURL()}">
+  <h3>My Work Experience</h3>
+  <p th:text="${portfolio.getDescription()}"></p>
+</body>
+</html>
