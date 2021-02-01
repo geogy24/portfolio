@@ -1,6 +1,6 @@
 # Portfolio & Profile
 
-_This project is a test_
+_This project is a test_. Hours on developing 8. 
 
 ## Starting
 
